@@ -600,6 +600,12 @@ SHERPA_ONNX_API typedef struct SherpaOnnxOfflineRecognizerResult {
 
   // return event.
   const char *event;
+
+  //add by tf @2025-05-13 BOF
+  float avg_logprob;
+  //add by tf @2025-05-13 EOF
+
+  
 } SherpaOnnxOfflineRecognizerResult;
 
 /// Get the result of the offline stream.
