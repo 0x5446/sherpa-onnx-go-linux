@@ -499,6 +499,7 @@ type OfflineRecognizerResult struct {
 	Lang       string
 	Emotion    string
 	Event      string
+	AvgLogProb float32
 }
 
 func newCOfflineRecognizerConfig(config *OfflineRecognizerConfig) *C.struct_SherpaOnnxOfflineRecognizerConfig {
@@ -804,6 +805,7 @@ func (s *OfflineStream) GetResult() *OfflineRecognizerResult {
 	result.Event = C.GoString(p.event)
 	result.Tokens = make([]string, n)
 	tokens := unsafe.Slice(p.tokens_arr, n)
+	result.AvgLogProb = float32(p.avg_logprob)
 	for i := 0; i < n; i++ {
 		result.Tokens[i] = C.GoString(tokens[i])
 	}
