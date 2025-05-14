@@ -811,9 +811,16 @@ func (s *OfflineStream) GetResult() *OfflineRecognizerResult {
 	}
 	result.AvgLogProb = float32(p.avg_logprob)
 	result.LogProbs = make([]float32, n)
-	log_probs := unsafe.Slice(p.log_probs, n)
-	for i := 0; i < n; i++ {
-		result.LogProbs[i] = float32(log_probs[i])
+	// 添加空指针检查
+	if p.log_probs == nil {
+		// LogProbs保持为nil或空数组
+		result.LogProbs = []float32{}
+	} else {
+		result.LogProbs = make([]float32, n)
+		log_probs := unsafe.Slice(p.log_probs, n)
+		for i := 0; i < n; i++ {
+			result.LogProbs[i] = float32(log_probs[i])
+		}
 	}
 	if p.timestamps == nil {
 		return result
