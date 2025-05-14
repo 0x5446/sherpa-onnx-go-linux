@@ -603,6 +603,7 @@ SHERPA_ONNX_API typedef struct SherpaOnnxOfflineRecognizerResult {
 
   //add by tf @2025-05-13 BOF
   float avg_logprob;
+  float *log_probs;
   //add by tf @2025-05-13 EOF
 
   
