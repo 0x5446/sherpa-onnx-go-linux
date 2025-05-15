@@ -200,7 +200,10 @@ SHERPA_ONNX_API typedef struct SherpaOnnxOnlineRecognizerResult {
    *   }
    */
   const char *json;
-  const float *ys_probs;  // add by tf@20250515
+  // add by tf@20250515 BOF
+  const float *ys_probs;
+  float avg_ysprobs;
+  // add by tf@20250515 EOF
 } SherpaOnnxOnlineRecognizerResult;
 
 /// Note: OnlineRecognizer here means StreamingRecognizer.

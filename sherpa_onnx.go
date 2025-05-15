@@ -148,7 +148,9 @@ type OnlineRecognizerConfig struct {
 
 // It contains the recognition result for a online stream.
 type OnlineRecognizerResult struct {
-	Text string
+	Text       string
+	YsProbs    []float32
+	AvgYsProbs float32
 }
 
 // The online recognizer class. It wraps a pointer from C.
@@ -360,7 +362,16 @@ func (recognizer *OnlineRecognizer) GetResult(s *OnlineStream) *OnlineRecognizer
 	defer C.SherpaOnnxDestroyOnlineRecognizerResult(p)
 	result := &OnlineRecognizerResult{}
 	result.Text = C.GoString(p.text)
-
+	if p.ys_probs == nil {
+		result.YsProbs = []float32{}
+	} else {
+		result.YsProbs = make([]float32, p.count)
+		ys_probs := unsafe.Slice(p.ys_probs, p.count)
+		for i := 0; i < int(p.count); i++ {
+			result.YsProbs[i] = float32(ys_probs[i])
+		}
+	}
+	result.AvgYsProbs = float32(p.avg_ysprobs)
 	return result
 }
 
@@ -811,9 +822,7 @@ func (s *OfflineStream) GetResult() *OfflineRecognizerResult {
 	}
 	result.AvgLogProb = float32(p.avg_logprob)
 	result.LogProbs = make([]float32, n)
-	// 添加空指针检查
 	if p.log_probs == nil {
-		// LogProbs保持为nil或空数组
 		result.LogProbs = []float32{}
 	} else {
 		result.LogProbs = make([]float32, n)
