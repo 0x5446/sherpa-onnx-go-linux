@@ -510,7 +510,7 @@ type OfflineRecognizerResult struct {
 	Lang       string
 	Emotion    string
 	Event      string
-	AvgLogProb float32
+	AvgLogProb float64
 	LogProbs   []float32
 }
 
@@ -820,7 +820,7 @@ func (s *OfflineStream) GetResult() *OfflineRecognizerResult {
 	for i := 0; i < n; i++ {
 		result.Tokens[i] = C.GoString(tokens[i])
 	}
-	result.AvgLogProb = float32(p.avg_logprob)
+	result.AvgLogProb = float64(p.avg_logprob)
 	result.LogProbs = make([]float32, n)
 	if p.log_probs == nil {
 		result.LogProbs = []float32{}
