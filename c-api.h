@@ -202,7 +202,7 @@ SHERPA_ONNX_API typedef struct SherpaOnnxOnlineRecognizerResult {
   const char *json;
   // add by tf@20250515 BOF
   const float *ys_probs;
-  float avg_ysprobs;
+  float avg_ysprob;
   // add by tf@20250515 EOF
 } SherpaOnnxOnlineRecognizerResult;
 

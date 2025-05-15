@@ -148,9 +148,9 @@ type OnlineRecognizerConfig struct {
 
 // It contains the recognition result for a online stream.
 type OnlineRecognizerResult struct {
-	Text       string
-	YsProbs    []float32
-	AvgYsProbs float32
+	Text      string
+	YsProbs   []float32
+	AvgYsProb float32
 }
 
 // The online recognizer class. It wraps a pointer from C.
@@ -371,7 +371,7 @@ func (recognizer *OnlineRecognizer) GetResult(s *OnlineStream) *OnlineRecognizer
 			result.YsProbs[i] = float32(ys_probs[i])
 		}
 	}
-	result.AvgYsProbs = float32(p.avg_ysprobs)
+	result.AvgYsProb = float32(p.avg_ysprob)
 	return result
 }
 
